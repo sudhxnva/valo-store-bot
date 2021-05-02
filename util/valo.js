@@ -2,8 +2,8 @@ const { RiotApiClient, Region } = require("valorant.js");
 
 function getClient(username, password) {
   return new RiotApiClient({
-    username: "Reya01",
-    password: "Bubbalubba20",
+    username,
+    password,
     region: Region.AP,
     debug: true,
   });

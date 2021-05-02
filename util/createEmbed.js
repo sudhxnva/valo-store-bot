@@ -1,4 +1,4 @@
-module.exports = function (user, skins) {
+function generateSkinsEmbed(user, skins) {
   return {
     color: 0x0099ff,
     title: `${user}'s Valorant Store`,
@@ -15,4 +15,21 @@ module.exports = function (user, skins) {
       text: "Bot by VIPΞR#4643",
     },
   };
+}
+
+function generateRegisterEmbed() {
+  return {
+    color: 0x0099ff,
+    title: "ValoStoreBot",
+    description:
+      "To register your account, please send a message on **this chat** in this format:\n ```!register <riot_username> <riot_password>``` \n **NOTE**: Enter username that you login to valo client with(**not** your in-game name)\n **NOTE 2**: Make sure there's a space bw username and password",
+    footer: {
+      text: "PS: Don't worry, I encrypt your password before storing it",
+    },
+  };
+}
+
+module.exports = {
+  generateSkinsEmbed,
+  generateRegisterEmbed,
 };
