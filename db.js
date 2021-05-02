@@ -1,6 +1,6 @@
 const { connect } = require("mongoose");
 
-connect("mongodb://localhost/ValoStoreBot", {
+connect(process.env.DB_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
