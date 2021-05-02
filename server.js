@@ -6,6 +6,7 @@ const {
 } = require("./util/createEmbed");
 
 const { decrypt, encrypt } = require("./util/crypto");
+require("./db");
 const { User } = require("./models/user");
 
 const client = new Discord.Client();
@@ -18,6 +19,8 @@ client.on("message", async (message) => {
   try {
     if (!message.content.startsWith("!") || message.author.bot) return;
     if (message.content === "!store") {
+      if (message.channel.type === "dm")
+        return message.reply("Use this command on the server!");
       const user = await User.findOne({ discordID: message.author.id });
       if (!user) {
         message.reply(
