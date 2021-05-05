@@ -22,7 +22,7 @@ function generateRegisterEmbed() {
     color: 0x0099ff,
     title: "ValoStoreBot",
     description:
-      "To register your account, please send a message on **this chat** in this format:\n ```!register <riot_username> <riot_password>``` \n **NOTE**: Enter username that you login to valo client with(**not** your in-game name)\n **NOTE 2**: Make sure there's a space bw username and password",
+      "To register your account, please send a message on **this chat** in this format:\n ```!register <riot_username> <riot_password>```\n For Example: `!register tenz123 password420`\n **NOTE**: Enter username that you login to valo client with(**not** your in-game name)\n **NOTE 2**: Make sure there's a space bw username and password",
     footer: {
       text: "PS: Don't worry, I encrypt your password before storing it",
     },
