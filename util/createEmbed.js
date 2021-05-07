@@ -1,20 +1,40 @@
-function generateSkinsEmbed(user, skins) {
-  return {
-    color: 0x0099ff,
-    title: `${user}'s Valorant Store`,
-    author: {
-      name: "ValoStoreBot",
-    },
-    description: "Here are the firearms on offer today in your store",
-    fields: skins.map((skin) => ({
-      name: skin.name,
-      value: `Cost: ${skin.cost.amount} VP`,
-    })),
-    timestamp: new Date(),
-    footer: {
-      text: "Bot by VIPΞR#4643",
-    },
+const { MessageEmbed } = require("discord.js");
+const tileImages = require("./tileImages");
+
+async function generateSkinsEmbed(user, skins, authorTag) {
+  const image = await tileImages(
+    skins.map(
+      (skin) =>
+        `https://media.valorant-api.com/weaponskinlevels/${skin.id}/displayicon.png`
+    )
+  );
+
+  //A crude implementation of a divider :D
+  const fields = skins.map((skin) => ({
+    name: skin.name,
+    value: `Cost: ${skin.cost.amount} VP`,
+    inline: true,
+  }));
+  const divider = {
+    name: "|",
+    value: "|",
+    inline: true,
   };
+  fields.splice(1, 0, divider);
+  fields.splice(4, 0, divider);
+
+  return new MessageEmbed()
+    .setTitle(`${user}'s Valorant Store`)
+    .setAuthor("ValoStoreBot")
+    .setDescription(
+      `<@${authorTag}>, here are the firearms on offer today in your store`
+    )
+    .addFields(fields)
+    .attachFiles([{ name: "image.png", attachment: image }])
+    .setImage("attachment://image.png")
+    .setColor(0x0099ff)
+    .setTimestamp(new Date())
+    .setFooter("Bot by VIPΞR#4643");
 }
 
 function generateRegisterEmbed() {

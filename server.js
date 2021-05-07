@@ -29,14 +29,18 @@ client.on("message", async (message) => {
         );
         return message.author.send({ embed: generateRegisterEmbed() });
       }
-      const waitMessage = await message.channel.send("Fetching, hol up...");
+      const waitMessage = await message.channel.send("Fetching...");
       try {
         const valorant = getClient(
           user.riotUsername,
           decrypt(user.riotPassword)
         );
         const skins = await getSkins(valorant);
-        const embed = generateSkinsEmbed(valorant.user.GameName, skins);
+        const embed = await generateSkinsEmbed(
+          valorant.user.GameName,
+          skins,
+          message.author.id
+        );
         waitMessage.delete();
         message.channel.send({ embed });
       } catch (err) {
@@ -79,7 +83,7 @@ client.on("message", async (message) => {
         waitMessage.delete();
         message.reply(
           `Success! Welcome aboard, **${res.user.GameName}**!\nUse the command` +
-            "`!store` on the server to view the guns on sale on your store!"
+            "`!store` on the server to view the guns on sale in your store!"
         );
       })
       .catch((err) => {
