@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const { getClient, getSkins } = require("./util/valo");
 const {
   generateSkinsEmbed,
@@ -9,7 +9,9 @@ const { decrypt, encrypt } = require("./util/crypto");
 require("./db");
 const { User } = require("./models/user");
 
-const client = new Discord.Client();
+const intents = new Intents(Intents.ALL);
+
+const client = new Client({ ws: { intents } });
 
 client.on("ready", async () => {
   console.log("Bot Ready");
@@ -39,7 +41,7 @@ client.on("message", async (message) => {
         const embed = await generateSkinsEmbed(
           valorant.user.GameName,
           skins,
-          message.author.id
+          message
         );
         waitMessage.delete();
         message.channel.send({ embed });

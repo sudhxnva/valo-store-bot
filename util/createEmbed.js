@@ -1,33 +1,39 @@
 const { MessageEmbed } = require("discord.js");
 const tileImages = require("./tileImages");
 
-async function generateSkinsEmbed(user, skins, authorTag) {
+async function generateSkinsEmbed(user, skins, message) {
   const image = await tileImages(
     skins.map(
       (skin) =>
         `https://media.valorant-api.com/weaponskinlevels/${skin.id}/displayicon.png`
     )
   );
+  let mobile = false;
+  const presence = message.author.presence.clientStatus;
+  if (presence && presence.mobile === "online") mobile = true;
 
   //A crude implementation of a divider :D
   const fields = skins.map((skin) => ({
     name: skin.name,
     value: `Cost: ${skin.cost.amount} VP`,
-    inline: true,
+    inline: !mobile,
   }));
   const divider = {
     name: "|",
     value: "|",
     inline: true,
   };
-  fields.splice(1, 0, divider);
-  fields.splice(4, 0, divider);
+
+  if (!mobile) {
+    fields.splice(1, 0, divider);
+    fields.splice(4, 0, divider);
+  }
 
   return new MessageEmbed()
     .setTitle(`${user}'s Valorant Store`)
     .setAuthor("ValoStoreBot")
     .setDescription(
-      `<@${authorTag}>, here are the firearms on offer today in your store`
+      `<@${message.author.id}>, here are the firearms on offer today in your store`
     )
     .addFields(fields)
     .attachFiles([{ name: "image.png", attachment: image }])
