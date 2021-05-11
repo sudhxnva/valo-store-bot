@@ -5,7 +5,8 @@ const {
   generateRegisterEmbed,
 } = require("./util/createEmbed");
 
-const storeCommand = process.env.NODE_ENV === "development" ? "!test" : "store";
+const storeCommand =
+  process.env.NODE_ENV === "development" ? "!test" : "!store";
 
 const { decrypt, encrypt } = require("./util/crypto");
 require("./db");
