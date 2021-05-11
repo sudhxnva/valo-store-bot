@@ -5,6 +5,8 @@ const {
   generateRegisterEmbed,
 } = require("./util/createEmbed");
 
+const storeCommand = process.env.NODE_ENV === "development" ? "!test" : "store";
+
 const { decrypt, encrypt } = require("./util/crypto");
 require("./db");
 const { User } = require("./models/user");
@@ -20,7 +22,7 @@ client.on("ready", async () => {
 client.on("message", async (message) => {
   if (!message.content.startsWith("!") || message.author.bot) return;
 
-  if (message.content === "!store") {
+  if (message.content === storeCommand) {
     try {
       if (message.channel.type === "dm")
         return message.reply("Use this command on the server!");

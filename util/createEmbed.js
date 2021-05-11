@@ -8,32 +8,19 @@ async function generateSkinsEmbed(user, skins, message) {
         `https://media.valorant-api.com/weaponskinlevels/${skin.id}/displayicon.png`
     )
   );
-  let mobile = false;
-  const presence = message.author.presence.clientStatus;
-  if (presence && presence.mobile === "online") mobile = true;
 
   //A crude implementation of a divider :D
   const fields = skins.map((skin) => ({
     name: skin.name,
     value: `Cost: ${skin.cost.amount} VP`,
-    inline: !mobile,
+    inline: false,
   }));
-  const divider = {
-    name: "|",
-    value: "|",
-    inline: true,
-  };
-
-  if (!mobile) {
-    fields.splice(1, 0, divider);
-    fields.splice(4, 0, divider);
-  }
 
   return new MessageEmbed()
     .setTitle(`${user}'s Valorant Store`)
     .setAuthor("ValoStoreBot")
     .setDescription(
-      `<@${message.author.id}>, here are the firearms on offer today in your store`
+      `<@${message.author.id}>, here are the offers in your store:`
     )
     .addFields(fields)
     .attachFiles([{ name: "image.png", attachment: image }])

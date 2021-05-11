@@ -20,7 +20,7 @@ A simple Discord bot that retrieves the skins on sale in one’s Valorant store.
 
 5. Run the bot using `npm start`
 
-   For development, you can use `npm run dev` (runs with nodemon).
+   For development, you can use `npm run dev` (runs with nodemon). The bot will listen to the command `!test` instead of `!store` in dev mode.
 
 **Note**: This implementation of the bot was designed for a small Discord server with my friends in it. Hence, it encrypts the password and stores it in a DB so that a user doesn’t have to type in their credentials every single time. The app is only encrypting the password, **NOT** hashing it(read the difference [here](https://security.stackexchange.com/a/122606)). So this won’t suit big servers where you  people who are not comfortable with their passwords being stored in a random user’s database (A solution to this is that you can modify it to only store the username and ask them to enter their password every time).
 
@@ -28,7 +28,7 @@ A simple Discord bot that retrieves the skins on sale in one’s Valorant store.
 
 `!store` command on a server to retrieve the store. 
 
-![image-20210505160543424](https://user-images.githubusercontent.com/57023357/117529953-42a82c80-aff8-11eb-936f-76f10e3506c7.png)
+![image-20210505160543424](https://user-images.githubusercontent.com/57023357/117767950-44b7f880-b24f-11eb-9ec0-f02c88b3c2d6.png)
 
 If a user is calling the command for the first time, they will be asked to enter their details on a Discord DM chat with the bot.
 
