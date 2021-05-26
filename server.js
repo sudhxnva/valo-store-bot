@@ -23,6 +23,14 @@ client.on("ready", async () => {
 client.on("message", async (message) => {
   if (!message.content.startsWith("!") || message.author.bot) return;
 
+  if (message.content == "!ping") {
+    const resultMessage = await message.reply("Calculating ping...");
+    const ping = resultMessage.createdTimestamp - message.createdTimestamp;
+    resultMessage.edit(
+      `Bot latency: **${ping}ms**\nAPI Latency: **${client.ws.ping}ms**`
+    );
+  }
+
   if (message.content === storeCommand) {
     try {
       if (message.channel.type === "dm")
