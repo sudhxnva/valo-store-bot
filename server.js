@@ -1,8 +1,14 @@
-const { Client, Intents } = require("discord.js");
+const {
+  Client,
+  Intents,
+  MessageEmbed,
+  MessageAttachment,
+} = require("discord.js");
 const { getClient, getSkins } = require("./util/valo");
 const {
   generateSkinsEmbed,
   generateRegisterEmbed,
+  newAttachment,
 } = require("./util/createEmbed");
 
 const storeCommand =
@@ -48,14 +54,19 @@ client.on("message", async (message) => {
           user.riotUsername,
           decrypt(user.riotPassword)
         );
+
         const skins = await getSkins(valorant);
-        const embed = await generateSkinsEmbed(
-          valorant.user.GameName,
-          skins,
-          message
-        );
+        // const embed = await generateSkinsEmbed(
+        //   valorant.user.GameName,
+        //   skins,
+        //   message
+        // );
+        // await message.channel.send({ embed });
+
+        const image = await newAttachment(skins);
+        await message.reply(new MessageAttachment(image, `image.png`));
+
         waitMessage.delete();
-        message.channel.send({ embed });
       } catch (err) {
         waitMessage.delete();
         console.error(err);

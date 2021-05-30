@@ -17,6 +17,7 @@
     "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
     "mongoose": "^5.12.7",
+    "node-html-to-image": "^3.1.0",
     "valorant.js": "^1.6.2"
   },
   "devDependencies": {
