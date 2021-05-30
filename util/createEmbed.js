@@ -58,19 +58,24 @@ async function newAttachment(skins) {
       case 1775:
         priceTier = "60bca009-4182-7998-dee7-b8a2558dc369";
         break;
+      case 2175:
+        priceTier = "60bca009-4182-7998-dee7-b8a2558dc369";
+        break;
       case 2475:
-        priceTier = "12683d76-48d7-84a3-4e09-6985794f0445";
+        priceTier = "411e4a55-4e59-7757-41f0-86a53f101bb5";
         break;
       default:
-        priceTier = "411e4a55-4e59-7757-41f0-86a53f101bb5";
+        priceTier = "e046854e-406c-37f4-6607-19a9ba8426fc";
         break;
     }
     const imageDiv = `
     <div class="skin-wrapper">
       <div class="skin-bg">
         <div class="skin-text skin-price">
+        <div class="content-tier">
           <img src="https://media.valorant-api.com/contenttiers/${priceTier}/displayicon.png"
               class="price-tier-img">
+        </div>
           <span class="skin-price-text">${skin.cost.amount} VP</span>
         </div>
         <div class="skin-text skin-title">${skin.name}</div>
@@ -82,16 +87,17 @@ async function newAttachment(skins) {
     images += imageDiv;
   }
 
-  const template = `<!DOCTYPE html>
-<html lang="en">
+  const template = `
+  <!DOCTYPE html>
+  <html lang="en">
 
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ValoStoreBot</title>
     <style>
-        :root{
+             :root{
             --body-width: 740px;
             --body-height: 400px;
             --grid-width: 360px;
@@ -177,7 +183,6 @@ async function newAttachment(skins) {
             max-width: 150px;
             font-size: 20px;
             color: rgba(255, 255, 255, 0.911);
-            z-index: 1;
         }
 
         .skin-text.skin-price {
@@ -203,7 +208,15 @@ async function newAttachment(skins) {
         }
 
         .price-tier-img {
-            width: 15px;
+            display: grid;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .content-tier{
+            align-self: center;
+            width: 23px;
         }
     </style>
 </head>
