@@ -5,6 +5,7 @@ const {
   MessageAttachment,
 } = require("discord.js");
 const { getClient, getSkins } = require("./util/valo");
+require("discord-reply");
 const {
   generateSkinsEmbed,
   generateRegisterEmbed,
@@ -48,6 +49,7 @@ client.on("message", async (message) => {
         );
         return message.author.send({ embed: generateRegisterEmbed() });
       }
+
       const waitMessage = await message.channel.send("Fetching...");
       try {
         const valorant = getClient(
@@ -64,7 +66,8 @@ client.on("message", async (message) => {
         // await message.channel.send({ embed });
 
         const image = await newAttachment(skins);
-        await message.reply(new MessageAttachment(image, `image.png`));
+        message.lineReplyNoMention(new MessageAttachment(image, `image.png`));
+        // await message.reply(new MessageAttachment(image, `image.png`));
 
         waitMessage.delete();
       } catch (err) {
