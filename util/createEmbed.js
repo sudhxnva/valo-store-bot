@@ -43,7 +43,7 @@ function generateRegisterEmbed() {
   };
 }
 
-async function newAttachment(skins) {
+async function imageEmbed(user, skins, message) {
   let images = "";
   let priceTier = "";
 
@@ -76,12 +76,14 @@ async function newAttachment(skins) {
           <img src="https://media.valorant-api.com/contenttiers/${priceTier}/displayicon.png"
               class="price-tier-img">
         </div>
-          <span class="skin-price-text">${skin.cost.amount} VP</span>
+          <span class="skin-price-text">${skin.cost.amount.toLocaleString()} VP</span>
         </div>
         <div class="skin-text skin-title">${skin.name}</div>
         <div class="skin-text skin-title bg">${skin.name}</div>
-        <img src="https://media.valorant-api.com/weaponskinlevels/${skin.id}/displayicon.png"
-            class="skin-image" />
+        <img src="https://media.valorant-api.com/weaponskinlevels/${
+          skin.id
+        }/displayicon.png"
+            class="skin-image ${skin.cost.amount > 3000 ? "knife" : ""}" />
       </div>
     </div>`;
     images += imageDiv;
@@ -97,7 +99,7 @@ async function newAttachment(skins) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ValoStoreBot</title>
     <style>
-             :root{
+    :root{
             --body-width: 740px;
             --body-height: 400px;
             --grid-width: 360px;
@@ -124,7 +126,6 @@ async function newAttachment(skins) {
             height: var(--body-height);
             padding: 9px 0;
             background-color: rgb(0, 0, 0);
-            border-radius: 10px;
             display: grid;
             grid-template-columns: var(--grid-width) var(--grid-width);
             justify-content: center;
@@ -141,7 +142,7 @@ async function newAttachment(skins) {
         }
 
         .skin-bg {
-            background-color: rgb(48, 48, 48);
+            background-color: rgb(29 29 29);
             overflow: hidden;
             height: var(--skin-bg-height);
             border-radius: 5px;
@@ -159,6 +160,10 @@ async function newAttachment(skins) {
             z-index: 200;
         }
 
+        .skin-image.knife {
+            transform: translate(-51%, -126%) rotate(45deg);
+        }
+
         .skin-text {
             font-weight: 700;
             font-style: italic;
@@ -171,7 +176,7 @@ async function newAttachment(skins) {
             position: absolute;
             padding: 2px;
             font-size: 75px;
-            color: rgb(255 255 255 / 4%);
+            color: rgb(255 255 255 / 5%);
         }
 
         .skin-text.skin-title{
@@ -195,15 +200,15 @@ async function newAttachment(skins) {
             display: inline-flex;
             background-color: rgb(0 0 0 / 36%);
             padding: 4px;
-            border-radius: 7px;
+            border-radius: 2px;
             z-index: 1;
         }
 
         .skin-price-text{
-            padding-left: 3px; 
+            padding-left: 7px; 
             margin-top: auto; 
             margin-bottom: auto; 
-            font-size: 20px;
+            font-size: 16px;
             opacity: 0.85;
         }
 
@@ -216,7 +221,7 @@ async function newAttachment(skins) {
 
         .content-tier{
             align-self: center;
-            width: 23px;
+            width: 20px;
         }
     </style>
 </head>
@@ -237,11 +242,22 @@ async function newAttachment(skins) {
     encoding: "buffer",
     transparent: true,
   });
-  return image;
+
+  return new MessageEmbed()
+    .setTitle(`${user}'s Valorant Store`)
+    .setAuthor("ValoStoreBot")
+    .setDescription(
+      `<@${message.author.id}>, here are the offers in your store:`
+    )
+    .attachFiles([{ name: "image.png", attachment: image }])
+    .setImage("attachment://image.png")
+    .setColor(0x0099ff)
+    .setTimestamp(new Date())
+    .setFooter("Bot by VIPΞR#4643");
 }
 
 module.exports = {
   generateSkinsEmbed,
   generateRegisterEmbed,
-  newAttachment,
+  imageEmbed,
 };

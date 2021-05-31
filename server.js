@@ -6,11 +6,7 @@ const {
 } = require("discord.js");
 const { getClient, getSkins } = require("./util/valo");
 require("discord-reply");
-const {
-  generateSkinsEmbed,
-  generateRegisterEmbed,
-  newAttachment,
-} = require("./util/createEmbed");
+const { generateRegisterEmbed, imageEmbed } = require("./util/createEmbed");
 
 const storeCommand =
   process.env.NODE_ENV === "development" ? "!test" : "!store";
@@ -44,39 +40,31 @@ client.on("message", async (message) => {
         return message.reply("Use this command on the server!");
       const user = await User.findOne({ discordID: message.author.id });
       if (!user) {
-        message.reply(
+        message.lineReply(
           "I don't have your Valorant credentials, please reply to my DM with them!"
         );
         return message.author.send({ embed: generateRegisterEmbed() });
       }
 
-      const waitMessage = await message.channel.send("Fetching...");
+      const waitMessage = await message.lineReplyNoMention("Fetching...");
       try {
         const valorant = getClient(
           user.riotUsername,
           decrypt(user.riotPassword)
         );
-
         const skins = await getSkins(valorant);
-        // const embed = await generateSkinsEmbed(
-        //   valorant.user.GameName,
-        //   skins,
-        //   message
-        // );
-        // await message.channel.send({ embed });
-
-        const image = await newAttachment(skins);
-        message.lineReplyNoMention(new MessageAttachment(image, `image.png`));
-        // await message.reply(new MessageAttachment(image, `image.png`));
-
+        const embed = await imageEmbed(valorant.user.GameName, skins, message);
+        message.lineReplyNoMention(embed);
         waitMessage.delete();
       } catch (err) {
         waitMessage.delete();
         console.error(err);
-        message.channel.send("Sorry! I have trouble connecting to the store");
+        message.lineReplyNoMention(
+          "Sorry! I have trouble connecting to the store."
+        );
       }
     } catch (error) {
-      message.channel.send("Sorry, I ran into an error.");
+      message.lineReplyNoMention("Sorry! I ran into an error.");
       console.error(error);
     }
   }
