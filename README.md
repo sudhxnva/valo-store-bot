@@ -17,8 +17,9 @@ A simple Discord bot that retrieves the skins on sale in one’s Valorant store.
    BOT_TOKEN = "your_discord_bot_token"
    DB_URL = "mongoDB_connection_string"
    ```
+   (Yes, the bot will need a MongoDB instance)
 
-5. Run the bot using `npm start`
+1. Run the bot using `npm start`
 
    For development, you can use `npm run dev` (runs with nodemon). The bot will listen to the command `!test` instead of `!store` in dev mode.
 
@@ -28,9 +29,9 @@ A simple Discord bot that retrieves the skins on sale in one’s Valorant store.
 
 `!store` command on a server to retrieve the store. 
 
-![image-20210505160543424](https://user-images.githubusercontent.com/57023357/117767950-44b7f880-b24f-11eb-9ec0-f02c88b3c2d6.png)
+![image-20210505160543424](https://user-images.githubusercontent.com/57023357/120147736-c246a700-c204-11eb-9625-550b9a8d5f36.png)
 
-If a user is calling the command for the first time, they will be asked to enter their details on a Discord DM chat with the bot.
+If a user is calling the command for the first time, they will be prompted to enter their details on a Discord DM chat with the bot.
 
 ![image-20210505160637182](https://user-images.githubusercontent.com/57023357/117132364-641ed380-adc0-11eb-8612-f3a34097924f.png)
 
