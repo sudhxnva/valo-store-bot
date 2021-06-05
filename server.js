@@ -55,10 +55,6 @@ client.on("message", async (message) => {
           user.riotUsername,
           decrypt(user.riotPassword)
         );
-<<<<<<< HEAD
-        const skins = await getSkins(valorant);
-        const embed = await imageEmbed(valorant.user.GameName, skins, message);
-=======
         const { skins, playerCard } = await getSkins(valorant);
         const embed = await imageEmbed(
           {
@@ -70,7 +66,6 @@ client.on("message", async (message) => {
           playerCard,
           message
         );
->>>>>>> master
         message.lineReplyNoMention(embed);
         waitMessage.delete();
       } catch (err) {
