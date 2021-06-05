@@ -43,7 +43,12 @@ function generateRegisterEmbed() {
   };
 }
 
-async function imageEmbed(user, skins, message) {
+async function imageEmbed(
+  user,
+  skins,
+  playerCard = "c89194bd-4710-b54e-8d6c-60be6274fbb2",
+  message
+) {
   let images = "";
   let priceTier = "";
 
@@ -244,14 +249,18 @@ async function imageEmbed(user, skins, message) {
   });
 
   return new MessageEmbed()
-    .setTitle(`${user}'s Valorant Store`)
-    .setAuthor("ValoStoreBot")
+    .setTitle(`${message.author.username}'s Valorant Store`)
     .setDescription(
-      `<@${message.author.id}>, here are the offers in your store:`
+      `> **Gamer Tag:** ${user.name}#${user.tag}
+      > **Region:** ${user.region.toUpperCase()}
+      
+      Here are the offers in your store:`
+    )
+    .setThumbnail(
+      `https://media.valorant-api.com/playercards/${playerCard}/smallart.png`
     )
     .attachFiles([{ name: "image.png", attachment: image }])
     .setImage("attachment://image.png")
-    .setColor(0x0099ff)
     .setTimestamp(new Date())
     .setFooter("Bot by VIPΞR#4643");
 }
