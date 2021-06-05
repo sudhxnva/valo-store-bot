@@ -10,12 +10,18 @@ function getClient(username, password) {
 }
 
 async function getSkins(valorant) {
-  await valorant.login();
+  const user = await valorant.login();
   const store = await valorant.storeApi.getStorefront(
     valorant.user.Subject,
     true
   );
-  return store.skins;
+  const { PlayerCard } = await valorant.playerApi.getInventory(
+    user.user.Subject
+  );
+  return {
+    skins: store.skins,
+    playerCard: PlayerCard,
+  };
 }
 
 module.exports = {
