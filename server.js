@@ -20,6 +20,9 @@ const intents = new Intents(Intents.ALL);
 const client = new Client({ ws: { intents } });
 
 client.on("ready", async () => {
+  client.user.setActivity("!store", {
+    type: "LISTENING",
+  });
   console.log("Bot Ready");
 });
 
@@ -52,8 +55,17 @@ client.on("message", async (message) => {
           user.riotUsername,
           decrypt(user.riotPassword)
         );
-        const skins = await getSkins(valorant);
-        const embed = await imageEmbed(valorant.user.GameName, skins, message);
+        const { skins, playerCard } = await getSkins(valorant);
+        const embed = await imageEmbed(
+          {
+            name: valorant.user.GameName,
+            tag: valorant.user.TagLine,
+            region: valorant.region.Name,
+          },
+          skins,
+          playerCard,
+          message
+        );
         message.lineReplyNoMention(embed);
         waitMessage.delete();
       } catch (err) {
