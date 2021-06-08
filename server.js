@@ -55,7 +55,7 @@ client.on("message", async (message) => {
           user.riotUsername,
           decrypt(user.riotPassword)
         );
-        const { skins, playerCard } = await getSkins(valorant);
+        const { skins, Identity } = await getSkins(valorant);
         const embed = await imageEmbed(
           {
             name: valorant.user.GameName,
@@ -63,7 +63,7 @@ client.on("message", async (message) => {
             region: valorant.region.Name,
           },
           skins,
-          playerCard,
+          Identity,
           message
         );
         message.lineReplyNoMention(embed);

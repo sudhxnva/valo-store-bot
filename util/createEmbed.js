@@ -46,7 +46,7 @@ function generateRegisterEmbed() {
 async function imageEmbed(
   user,
   skins,
-  playerCard = "c89194bd-4710-b54e-8d6c-60be6274fbb2",
+  { PlayerCard = "c89194bd-4710-b54e-8d6c-60be6274fbb2" },
   message
 ) {
   let images = "";
@@ -257,7 +257,7 @@ async function imageEmbed(
       Here are the offers in your store:`
     )
     .setThumbnail(
-      `https://media.valorant-api.com/playercards/${playerCard}/smallart.png`
+      `https://media.valorant-api.com/playercards/${PlayerCard}/smallart.png`
     )
     .attachFiles([{ name: "image.png", attachment: image }])
     .setImage("attachment://image.png")
