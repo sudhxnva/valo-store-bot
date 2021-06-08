@@ -46,7 +46,7 @@ function generateRegisterEmbed() {
 async function imageEmbed(
   user,
   skins,
-  { PlayerCard = "c89194bd-4710-b54e-8d6c-60be6274fbb2" },
+  { PlayerCardID = "c89194bd-4710-b54e-8d6c-60be6274fbb2", AccountLevel },
   message
 ) {
   let images = "";
@@ -251,13 +251,13 @@ async function imageEmbed(
   return new MessageEmbed()
     .setTitle(`${message.author.username}'s Valorant Store`)
     .setDescription(
-      `> **Gamer Tag:** ${user.name}#${user.tag}
+      `> **Gamer Tag:** ${user.name}#${user.tag} 
+      > **Account Level:** ${AccountLevel}
       > **Region:** ${user.region.toUpperCase()}
-      
       Here are the offers in your store:`
     )
     .setThumbnail(
-      `https://media.valorant-api.com/playercards/${PlayerCard}/smallart.png`
+      `https://media.valorant-api.com/playercards/${PlayerCardID}/smallart.png`
     )
     .attachFiles([{ name: "image.png", attachment: image }])
     .setImage("attachment://image.png")
