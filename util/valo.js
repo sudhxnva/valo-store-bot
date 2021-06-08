@@ -10,18 +10,23 @@ function getClient(username, password) {
 }
 
 async function getSkins(valorant) {
-  const user = await valorant.login();
-  const store = await valorant.storeApi.getStorefront(
-    valorant.user.Subject,
-    true
-  );
-  const { PlayerCard } = await valorant.playerApi.getInventory(
-    user.user.Subject
-  );
-  return {
-    skins: store.skins,
-    playerCard: PlayerCard,
-  };
+  try {
+    const user = await valorant.login();
+    const store = await valorant.storeApi.getStorefront(
+      valorant.user.Subject,
+      true
+    );
+    let PlayerCard;
+    // const { PlayerCard = null } = await valorant.playerApi.getInventory(
+    //   user.user.Subject
+    // );
+    return {
+      skins: store.skins,
+      playerCard: PlayerCard,
+    };
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 module.exports = {
