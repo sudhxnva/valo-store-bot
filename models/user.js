@@ -7,6 +7,10 @@ const userSchema = new Schema({
     required: true,
   },
   discordName: String,
+  shard: {
+    type: String,
+    enum: ["NA", "EU", "AP", "KR"],
+  },
   riotUsername: {
     type: String,
     required: true,
