@@ -4,7 +4,7 @@ const {
   MessageEmbed,
   MessageAttachment,
 } = require("discord.js");
-const { getClient, getSkins } = require("./util/valo");
+const { getClient, getSkins, lastCompeMatch } = require("./util/valo");
 require("discord-reply");
 const { generateRegisterEmbed, imageEmbed } = require("./util/createEmbed");
 
@@ -25,6 +25,12 @@ client.on("ready", async () => {
   });
   console.log("Bot Ready");
 });
+
+// (async () => {
+//   const valorant = getClient("IXXxViPERxXXI", "i6M5nWs3MsrD");
+//   const val = await valorant.login();
+//   console.log(await lastCompeMatch(val));
+// })();
 
 client.on("message", async (message) => {
   if (!message.content.startsWith("!") || message.author.bot) return;
@@ -56,7 +62,28 @@ client.on("message", async (message) => {
           decrypt(user.riotPassword),
           user.shard
         );
-        const { skins, Identity } = await getSkins(valorant);
+        const { skins, Identity, lastCompetitiveMatch } = await getSkins(
+          valorant
+        );
+        const competitiveTiers = [
+          "",
+          "Iron",
+          "Bronze",
+          "Silver",
+          "Gold",
+          "Platinum",
+          "Diamond",
+          "Immortal",
+          "Radiant",
+        ];
+        let rank;
+        if (lastCompetitiveMatch) {
+          rank = `${
+            competitiveTiers[
+              Math.floor(lastCompetitiveMatch.TierAfterUpdate / 3)
+            ]
+          } ${(lastCompetitiveMatch.TierAfterUpdate % 3) + 1}`;
+        }
         const embed = await imageEmbed(
           {
             name: valorant.user.GameName,
@@ -65,6 +92,7 @@ client.on("message", async (message) => {
           },
           skins,
           Identity,
+          rank,
           message
         );
         message.lineReplyNoMention(embed);
