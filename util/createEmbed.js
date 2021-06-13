@@ -46,7 +46,10 @@ function generateRegisterEmbed() {
 async function imageEmbed(
   user,
   skins,
-  { PlayerCardID = "c89194bd-4710-b54e-8d6c-60be6274fbb2", AccountLevel },
+  {
+    PlayerCardID = "c89194bd-4710-b54e-8d6c-60be6274fbb2",
+    AccountLevel = "Unknown",
+  },
   message
 ) {
   let images = "";

@@ -16,12 +16,12 @@ async function getSkins(valorant) {
       valorant.user.Subject,
       true
     );
-    const { Identity } = await valorant.playerApi.getInventory(
-      user.user.Subject
-    );
+    // const { Identity } = await valorant.playerApi.getInventory(
+    //   user.user.Subject
+    // );
     return {
       skins: store.skins,
-      Identity,
+      Identity: {},
     };
   } catch (error) {
     console.log(error);
