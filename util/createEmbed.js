@@ -36,9 +36,9 @@ function generateRegisterEmbed() {
     color: 0x0099ff,
     title: "ValoStoreBot",
     description:
-      "To register your account, please send a message on **this chat** in this format:\n ```!register <riot_username> <riot_password>```\n For Example: `!register tenz123 password420`\n **NOTE**: Enter username that you login to valo client with(**not** your in-game name)\n **NOTE 2**: Make sure there's a space bw username and password",
+      "To register your account, please send a message on **this chat** in this format:\n ```!register <region_code> <riot_username> <riot_password>```\n For Example: `!register NA tenz123 password420`\n\nTo find your region code, use [**this map**](https://user-images.githubusercontent.com/57023357/121816553-f22c8a80-cc99-11eb-8109-8b7a5b66e07d.png)\n\n**NOTE**: Enter username that you login to valo client with(**not** your in-game name)\n**NOTE 2**: If you select the wrong region, the skins shown **will not be correct**\n**NOTE 3**: Make sure there's a space bw username and password",
     footer: {
-      text: "PS: Don't worry, I encrypt your password before storing it",
+      text: "PS: This bot encrypts and stores your Valorant credentials because the bot has to access your account to get your skins. Riot's public API does not show user skins without logging in at the moment",
     },
   };
 }
@@ -46,7 +46,10 @@ function generateRegisterEmbed() {
 async function imageEmbed(
   user,
   skins,
-  playerCard = "c89194bd-4710-b54e-8d6c-60be6274fbb2",
+  {
+    PlayerCardID = "c89194bd-4710-b54e-8d6c-60be6274fbb2",
+    AccountLevel = "Unknown",
+  },
   message
 ) {
   let images = "";
@@ -251,13 +254,13 @@ async function imageEmbed(
   return new MessageEmbed()
     .setTitle(`${message.author.username}'s Valorant Store`)
     .setDescription(
-      `> **Gamer Tag:** ${user.name}#${user.tag}
+      `> **Gamer Tag:** ${user.name}#${user.tag} 
+      > **Account Level:** ${AccountLevel}
       > **Region:** ${user.region.toUpperCase()}
-      
       Here are the offers in your store:`
     )
     .setThumbnail(
-      `https://media.valorant-api.com/playercards/${playerCard}/smallart.png`
+      `https://media.valorant-api.com/playercards/${PlayerCardID}/smallart.png`
     )
     .attachFiles([{ name: "image.png", attachment: image }])
     .setImage("attachment://image.png")

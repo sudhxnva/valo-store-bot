@@ -53,9 +53,10 @@ client.on("message", async (message) => {
       try {
         const valorant = getClient(
           user.riotUsername,
-          decrypt(user.riotPassword)
+          decrypt(user.riotPassword),
+          user.shard
         );
-        const { skins, playerCard } = await getSkins(valorant);
+        const { skins, Identity } = await getSkins(valorant);
         const embed = await imageEmbed(
           {
             name: valorant.user.GameName,
@@ -63,7 +64,7 @@ client.on("message", async (message) => {
             region: valorant.region.Name,
           },
           skins,
-          playerCard,
+          Identity,
           message
         );
         message.lineReplyNoMention(embed);
@@ -89,16 +90,20 @@ client.on("message", async (message) => {
       );
     }
     const args = message.content.slice("!register".length).trim().split(" ");
-    if (args.length != 2) return message.reply("Invalid format!");
+    if (args.length != 3) return message.reply("Invalid format!");
+    const regions = ["NA", "EU", "AP", "KR"];
+    if (!regions.includes(args[0]))
+      return message.reply("Invalid Region Entered!");
 
     const waitMessage = await message.reply("Authenticating...");
 
     const details = {
       discordName: message.author.username,
-      riotUsername: args[0],
-      riotPassword: encrypt(args[1]),
+      shard: args[0],
+      riotUsername: args[1],
+      riotPassword: encrypt(args[2]),
     };
-    const valorant = getClient(args[0], args[1]);
+    const valorant = getClient(args[1], args[2], args[0]);
 
     valorant
       .login()
@@ -109,7 +114,7 @@ client.on("message", async (message) => {
         });
         waitMessage.delete();
         message.reply(
-          `Success! Welcome aboard, **${res.user.GameName}**!\nUse the command` +
+          `Success! Welcome aboard, **${res.user.GameName}#${res.user.TagLine}**!\nUse the command` +
             "`!store` on the server to view the guns on sale in your store!"
         );
       })

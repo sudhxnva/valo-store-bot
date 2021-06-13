@@ -1,10 +1,10 @@
 const { RiotApiClient, Region } = require("valorant.js");
 
-function getClient(username, password) {
+function getClient(username, password, shard = "AP") {
   return new RiotApiClient({
     username,
     password,
-    region: Region.AP,
+    region: Region[`${shard}`],
     debug: true,
   });
 }
@@ -16,13 +16,12 @@ async function getSkins(valorant) {
       valorant.user.Subject,
       true
     );
-    let PlayerCard;
-    // const { PlayerCard = null } = await valorant.playerApi.getInventory(
+    // const { Identity } = await valorant.playerApi.getInventory(
     //   user.user.Subject
     // );
     return {
       skins: store.skins,
-      playerCard: PlayerCard,
+      Identity: {},
     };
   } catch (error) {
     console.log(error);
