@@ -52,12 +52,17 @@ client.on("message", async (message) => {
       const waitMessage = await message.lineReplyNoMention("Fetching...");
       try {
         const startTime = new Date();
+        console.log("Start API call to Val");
         const valorant = getClient(
           user.riotUsername,
           decrypt(user.riotPassword),
           user.shard
         );
         const { skins, Identity } = await getSkins(valorant);
+        console.log(
+          `Time for getting skins: ${(new Date() - startTime) / 1000} seconds`
+        );
+        const embedStartTime = new Date();
         const embed = await imageEmbed(
           {
             name: valorant.user.GameName,
@@ -69,11 +74,16 @@ client.on("message", async (message) => {
           message
         );
         console.log(
-          `Roundtrip time for embed creation: ${
-            (new Date() - startTime) / 1000
+          `Time for embed creation: ${
+            (new Date() - embedStartTime) / 1000
           } seconds`
         );
         message.lineReplyNoMention(embed);
+        console.log(
+          `Roundtrip time for full function: ${
+            (new Date() - startTime) / 1000
+          } seconds`
+        );
         waitMessage.delete();
       } catch (err) {
         waitMessage.delete();
