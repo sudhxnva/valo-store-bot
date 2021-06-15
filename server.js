@@ -26,12 +26,6 @@ client.on("ready", async () => {
   console.log("Bot Ready");
 });
 
-// (async () => {
-//   const valorant = getClient("IXXxViPERxXXI", "i6M5nWs3MsrD");
-//   const val = await valorant.login();
-//   console.log(await lastCompeMatch(val));
-// })();
-
 client.on("message", async (message) => {
   if (!message.content.startsWith("!") || message.author.bot) return;
 
