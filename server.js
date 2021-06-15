@@ -51,6 +51,7 @@ client.on("message", async (message) => {
 
       const waitMessage = await message.lineReplyNoMention("Fetching...");
       try {
+        const startTime = new Date();
         const valorant = getClient(
           user.riotUsername,
           decrypt(user.riotPassword),
@@ -66,6 +67,11 @@ client.on("message", async (message) => {
           skins,
           Identity,
           message
+        );
+        console.log(
+          `Roundtrip time for embed creation: ${
+            (new Date() - startTime) / 1000
+          } seconds`
         );
         message.lineReplyNoMention(embed);
         waitMessage.delete();
