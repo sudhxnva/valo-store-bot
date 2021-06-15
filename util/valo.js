@@ -22,16 +22,16 @@ async function getSkins(valorant) {
     console.log(
       `Val: Skins retrieved (${(new Date() - skinsStartTime) / 1000}s)`
     );
-    // const cardStartTime = new Date();
-    // const { Identity } = await valorant.playerApi.getInventory(
-    //   user.user.Subject
-    // );
-    // console.log(
-    //   `Val: Playercard retrieved (${(new Date() - cardStartTime) / 1000}s)`
-    // );
+    const cardStartTime = new Date();
+    const { Identity } = await valorant.playerApi.getInventory(
+      user.user.Subject
+    );
+    console.log(
+      `Val: Playercard retrieved (${(new Date() - cardStartTime) / 1000}s)`
+    );
     return {
       skins,
-      Identity: {},
+      Identity,
     };
   } catch (error) {
     console.log(error);
