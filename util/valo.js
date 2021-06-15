@@ -11,17 +11,24 @@ function getClient(username, password, shard = "AP") {
 
 async function getSkins(valorant) {
   try {
+    const startTime = new Date();
     const user = await valorant.login();
-    console.log("Val: Logged in");
+    console.log(`Val: Logged in (${(new Date() - startTime) / 1000}s)`);
+    const skinsStartTime = new Date();
     const { skins } = await valorant.storeApi.getStorefront(
       valorant.user.Subject,
       true
     );
-    console.log("Val: Skins retrieved");
+    console.log(
+      `Val: Skins retrieved (${(new Date() - skinsStartTime) / 1000}s)`
+    );
+    const cardStartTime = new Date();
     const { Identity } = await valorant.playerApi.getInventory(
       user.user.Subject
     );
-    console.log("Val: Playercard retrieved");
+    console.log(
+      `Val: Playercard retrieved (${(new Date() - cardStartTime) / 1000}s)`
+    );
     return {
       skins,
       Identity,

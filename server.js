@@ -60,7 +60,9 @@ client.on("message", async (message) => {
         );
         const { skins, Identity } = await getSkins(valorant);
         console.log(
-          `Time for getting skins: ${(new Date() - startTime) / 1000} seconds`
+          `DJS: Skins and PlayerCard retrieved (${
+            (new Date() - startTime) / 1000
+          }s)`
         );
         const embedStartTime = new Date();
         const embed = await imageEmbed(
@@ -74,9 +76,7 @@ client.on("message", async (message) => {
           message
         );
         console.log(
-          `Time for embed creation: ${
-            (new Date() - embedStartTime) / 1000
-          } seconds`
+          `DJS: Embed Created (${(new Date() - embedStartTime) / 1000}s)`
         );
         message.lineReplyNoMention(embed);
         console.log(
