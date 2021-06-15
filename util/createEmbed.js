@@ -239,7 +239,6 @@ async function imageEmbed(
 }
 
 module.exports = {
-  generateSkinsEmbed,
   generateRegisterEmbed,
   imageEmbed,
 };
