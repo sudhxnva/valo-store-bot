@@ -13,13 +13,14 @@ function generateRegisterEmbed() {
   };
 }
 
-async function imageEmbed(
+async function generateSkinsEmbed(
   user,
   skins,
   {
     PlayerCardID = "c89194bd-4710-b54e-8d6c-60be6274fbb2",
     AccountLevel = "Unknown",
   },
+  rank = "Unknown",
   message
 ) {
   let images = "";
@@ -225,6 +226,7 @@ async function imageEmbed(
     .setTitle(`${message.author.username}'s Valorant Store`)
     .setDescription(
       `> **Gamer Tag:** ${user.name}#${user.tag} 
+      > **Rank:** ${rank}
       > **Account Level:** ${AccountLevel}
       > **Region:** ${user.region.toUpperCase()}
       Here are the offers in your store:`
@@ -240,5 +242,5 @@ async function imageEmbed(
 
 module.exports = {
   generateRegisterEmbed,
-  imageEmbed,
+  generateSkinsEmbed,
 };

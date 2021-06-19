@@ -1,12 +1,10 @@
-const {
-  Client,
-  Intents,
-  MessageEmbed,
-  MessageAttachment,
-} = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const { getClient, getSkins } = require("./util/valo");
 require("discord-reply");
-const { generateRegisterEmbed, imageEmbed } = require("./util/createEmbed");
+const {
+  generateRegisterEmbed,
+  generateSkinsEmbed,
+} = require("./util/createEmbed");
 
 const storeCommand =
   process.env.NODE_ENV === "development" ? "!test" : "!store";
@@ -56,8 +54,29 @@ client.on("message", async (message) => {
           decrypt(user.riotPassword),
           user.shard
         );
-        const { skins, Identity } = await getSkins(valorant);
-        const embed = await imageEmbed(
+        const { skins, Identity, lastCompetitiveMatch } = await getSkins(
+          valorant
+        );
+        const competitiveTiers = [
+          "",
+          "Iron",
+          "Bronze",
+          "Silver",
+          "Gold",
+          "Platinum",
+          "Diamond",
+          "Immortal",
+          "Radiant",
+        ];
+        let rank;
+        if (lastCompetitiveMatch) {
+          rank = `${
+            competitiveTiers[
+              Math.floor(lastCompetitiveMatch.TierAfterUpdate / 3)
+            ]
+          } ${(lastCompetitiveMatch.TierAfterUpdate % 3) + 1}`;
+        }
+        const embed = await generateSkinsEmbed(
           {
             name: valorant.user.GameName,
             tag: valorant.user.TagLine,
@@ -65,6 +84,7 @@ client.on("message", async (message) => {
           },
           skins,
           Identity,
+          rank,
           message
         );
         message.lineReplyNoMention(embed);
