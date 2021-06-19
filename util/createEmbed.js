@@ -13,7 +13,7 @@ function generateRegisterEmbed() {
   };
 }
 
-async function imageEmbed(
+async function generateSkinsEmbed(
   user,
   skins,
   {
@@ -242,5 +242,5 @@ async function imageEmbed(
 
 module.exports = {
   generateRegisterEmbed,
-  imageEmbed,
+  generateSkinsEmbed,
 };

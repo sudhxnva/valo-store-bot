@@ -20,7 +20,7 @@ async function getSkins(valorant) {
     const { Identity } = await valorant.playerApi.getInventory(
       user.user.Subject
     );
-    const lastCompetitiveMatch = await lastCompeMatch(user);
+    const lastCompetitiveMatch = await getLastCompetitiveMatch(user);
     return {
       skins,
       Identity,
@@ -31,7 +31,7 @@ async function getSkins(valorant) {
   }
 }
 
-async function lastCompeMatch(val) {
+async function getLastCompetitiveMatch(val) {
   try {
     const doFetch = async ({ accessToken, rsoToken }, userId, startIndex) => {
       const res = await fetch(
@@ -68,5 +68,4 @@ async function lastCompeMatch(val) {
 module.exports = {
   getClient,
   getSkins,
-  lastCompeMatch,
 };

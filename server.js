@@ -1,12 +1,10 @@
-const {
-  Client,
-  Intents,
-  MessageEmbed,
-  MessageAttachment,
-} = require("discord.js");
-const { getClient, getSkins, lastCompeMatch } = require("./util/valo");
+const { Client, Intents } = require("discord.js");
+const { getClient, getSkins } = require("./util/valo");
 require("discord-reply");
-const { generateRegisterEmbed, imageEmbed } = require("./util/createEmbed");
+const {
+  generateRegisterEmbed,
+  generateSkinsEmbed,
+} = require("./util/createEmbed");
 
 const storeCommand =
   process.env.NODE_ENV === "development" ? "!test" : "!store";
@@ -78,7 +76,7 @@ client.on("message", async (message) => {
             ]
           } ${(lastCompetitiveMatch.TierAfterUpdate % 3) + 1}`;
         }
-        const embed = await imageEmbed(
+        const embed = await generateSkinsEmbed(
           {
             name: valorant.user.GameName,
             tag: valorant.user.TagLine,
