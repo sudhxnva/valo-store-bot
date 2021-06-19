@@ -13,17 +13,17 @@ function getClient(username, password, shard = "AP") {
 async function getSkins(valorant) {
   try {
     const user = await valorant.login();
-    const store = await valorant.storeApi.getStorefront(
+    const { skins } = await valorant.storeApi.getStorefront(
       valorant.user.Subject,
       true
     );
-    // const { Identity } = await valorant.playerApi.getInventory(
-    //   user.user.Subject
-    // );
+    const { Identity } = await valorant.playerApi.getInventory(
+      user.user.Subject
+    );
     const lastCompetitiveMatch = await lastCompeMatch(user);
     return {
-      skins: store.skins,
-      Identity: {},
+      skins,
+      Identity,
       lastCompetitiveMatch,
     };
   } catch (error) {

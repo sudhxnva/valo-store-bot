@@ -1,35 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const tileImages = require("./tileImages");
 const nodeHtmlToImage = require("node-html-to-image");
-
-async function generateSkinsEmbed(user, skins, message) {
-  const image = await tileImages(
-    skins.map(
-      (skin) =>
-        `https://media.valorant-api.com/weaponskinlevels/${skin.id}/displayicon.png`
-    )
-  );
-
-  //A crude implementation of a divider :D
-  const fields = skins.map((skin) => ({
-    name: skin.name,
-    value: `Cost: ${skin.cost.amount} VP`,
-    inline: false,
-  }));
-
-  return new MessageEmbed()
-    .setTitle(`${user}'s Valorant Store`)
-    .setAuthor("ValoStoreBot")
-    .setDescription(
-      `<@${message.author.id}>, here are the offers in your store:`
-    )
-    .addFields(fields)
-    .attachFiles([{ name: "image.png", attachment: image }])
-    .setImage("attachment://image.png")
-    .setColor(0x0099ff)
-    .setTimestamp(new Date())
-    .setFooter("Bot by VIPΞR#4643");
-}
 
 function generateRegisterEmbed() {
   return {
@@ -271,7 +241,6 @@ async function imageEmbed(
 }
 
 module.exports = {
-  generateSkinsEmbed,
   generateRegisterEmbed,
   imageEmbed,
 };
