@@ -54,9 +54,8 @@ client.on("message", async (message) => {
           decrypt(user.riotPassword),
           user.shard
         );
-        const { skins, Identity, lastCompetitiveMatch } = await getSkins(
-          valorant
-        );
+        const { skins, Identity, lastCompetitiveMatch, unranked } =
+          await getSkins(valorant);
         const competitiveTiers = [
           "",
           "Iron",
@@ -75,6 +74,10 @@ client.on("message", async (message) => {
               Math.floor(lastCompetitiveMatch.TierAfterUpdate / 3)
             ]
           } ${(lastCompetitiveMatch.TierAfterUpdate % 3) + 1}`;
+        } else {
+          rank =
+            `Unranked\n> (Play ${unranked.gamesNeededForRank} more competitive game` +
+            (unranked.gamesNeededForRank === 1 ? ")" : "s)");
         }
         const embed = await generateSkinsEmbed(
           {
