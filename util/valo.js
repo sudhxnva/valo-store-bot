@@ -20,12 +20,22 @@ async function getSkins(valorant) {
     const { Identity } = await valorant.playerApi.getInventory(
       user.user.Subject
     );
-    const lastCompetitiveMatch = await getLastCompetitiveMatch(user);
-    return {
+
+    const data = {
       skins,
       Identity,
-      lastCompetitiveMatch,
     };
+
+    const {
+      QueueSkills: {
+        competitive: { TotalGamesNeededForRating },
+      },
+    } = await user.matchApi.getMmr(user.user.Subject);
+    if (!TotalGamesNeededForRating) {
+      data.lastCompetitiveMatch = await getLastCompetitiveMatch(user);
+    } else data.unranked = { gamesNeededForRank: TotalGamesNeededForRating };
+
+    return data;
   } catch (error) {
     console.log(error);
   }
