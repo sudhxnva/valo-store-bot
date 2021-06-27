@@ -227,9 +227,9 @@ async function generateSkinsEmbed(
     .setDescription(
       `> **Gamer Tag:** ${user.name}#${user.tag} 
       > **Rank:** ${rank}
-      > **Account Level:** ${AccountLevel}
       > **Region:** ${user.region.toUpperCase()}
-      Here are the offers in your store:`
+      Here are the offers in your store:
+      ${AccountLevel === 0 ? "" : `> **Account Level:** ${AccountLevel}`}`
     )
     .setThumbnail(
       `https://media.valorant-api.com/playercards/${PlayerCardID}/smallart.png`
