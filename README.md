@@ -29,7 +29,7 @@ A simple Discord bot that retrieves the skins on sale in one’s Valorant store.
 
 `!store` command on a server to retrieve the store. 
 
-![image-20210505160543424](https://user-images.githubusercontent.com/57023357/120147736-c246a700-c204-11eb-9625-550b9a8d5f36.png)
+![image](https://user-images.githubusercontent.com/57023357/123987548-ea345080-d9e4-11eb-9b1a-3bc9bbe97d0d.png)
 
 If a user is calling the command for the first time, they will be prompted to enter their details on a Discord DM chat with the bot.
 
