@@ -12,12 +12,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cron": "^1.8.2",
     "discord-reply": "^0.1.2",
     "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.12.7",
     "node-fetch": "^2.6.1",
     "node-html-to-image": "^3.1.0",
+    "telegram-bot-api": "^2.0.1",
     "valorant.js": "^1.6.5"
   },
   "devDependencies": {

@@ -6,7 +6,7 @@ function generateRegisterEmbed() {
     color: 0x0099ff,
     title: "ValoStoreBot",
     description:
-      "To register your account, please send a message on **this chat** in this format:\n ```!register <region_code> <riot_username> <riot_password>```\n For Example: `!register NA tenz123 password420`\n\nTo find your region code, use [**this map**](https://user-images.githubusercontent.com/57023357/121816553-f22c8a80-cc99-11eb-8109-8b7a5b66e07d.png)\n\n**NOTE**: Enter username that you login to valo client with(**not** your in-game name)\n**NOTE 2**: If you select the wrong region, the skins shown **will not be correct**\n**NOTE 3**: Make sure there's a space bw username and password",
+      "To register your account, please send a message on **this chat** in this format:\n ```!register <riot_username> <riot_password> <riot_region> (optional)```\n For Example: `!register tenz123 password420`\n\nTo find your region code, use [**this map**](https://user-images.githubusercontent.com/57023357/121816553-f22c8a80-cc99-11eb-8109-8b7a5b66e07d.png)\n\n**NOTE**: Enter username that you login to valo client with(**not** your in-game name)\n**NOTE 2**: Current Default location is **AP**. Changing location can be done by registering again\n**NOTE 3**: Make sure there's a space bw username and password",
     footer: {
       text: "PS: This bot encrypts and stores your Valorant credentials because the bot has to access your account to get your skins. Riot's public API does not show user skins without logging in at the moment",
     },
@@ -237,7 +237,7 @@ async function generateSkinsEmbed(
     .attachFiles([{ name: "image.png", attachment: image }])
     .setImage("attachment://image.png")
     .setTimestamp(new Date())
-    .setFooter("Bot by VIPΞR#4643");
+    .setFooter("Bot by VIPΞR#4643 | Modified by akylus");
 }
 
 module.exports = {
