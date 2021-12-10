@@ -18,7 +18,7 @@
     "mongoose": "^5.12.7",
     "node-fetch": "^2.6.1",
     "node-html-to-image": "^3.1.0",
-    "valorant.js": "^1.6.5"
+    "valorant.js": "~/fatedev/valorant.js/"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"

@@ -13,7 +13,12 @@ function getClient(username, password, shard = "AP") {
 async function getSkins(valorant) {
   try {
     const user = await valorant.login();
-    const { skins } = await valorant.storeApi.getStorefront(
+    const balance = await valorant.storeApi.getWallet(
+      valorant.user.Subject,
+      true
+    );
+
+    const { skins, bonus } = await valorant.storeApi.getStorefront(
       valorant.user.Subject,
       true
     );
@@ -23,6 +28,8 @@ async function getSkins(valorant) {
 
     const data = {
       skins,
+      bonus,
+      balance,
       Identity,
     };
 

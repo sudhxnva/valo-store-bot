@@ -4,10 +4,14 @@ require("discord-reply");
 const {
   generateRegisterEmbed,
   generateSkinsEmbed,
+  generateMarketEmbed,
 } = require("./util/createEmbed");
 
 const storeCommand =
-  process.env.NODE_ENV === "development" ? "!test" : "!store";
+  process.env.NODE_ENV === "development" ? "!teststore" : "!store";
+
+const marketCommand =
+  process.env.NODE_ENV === "development" ? "!testmarket" : "!market";
 
 const { decrypt, encrypt } = require("./util/crypto");
 require("./db");
@@ -97,6 +101,57 @@ client.on("message", async (message) => {
         console.error(err);
         message.lineReplyNoMention(
           "Sorry! I have trouble connecting to the store."
+        );
+      }
+    } catch (error) {
+      message.lineReplyNoMention("Sorry! I ran into an error.");
+      console.error(error);
+    }
+  }
+
+  if (message.content === marketCommand) {
+    try {
+      if (message.channel.type === "dm")
+        return message.reply("Use this command on the server!");
+      const user = await User.findOne({ discordID: message.author.id });
+      if (!user) {
+        message.lineReply(
+          "I don't have your Valorant credentials, please reply to my DM with them!"
+        );
+        return message.author.send({ embed: generateRegisterEmbed() });
+      }
+
+      const waitMessage = await message.lineReplyNoMention("Fetching...");
+      try {
+        const valorant = getClient(
+          user.riotUsername,
+          decrypt(user.riotPassword),
+          user.shard
+        );
+        const { balance, bonus, Identity } =
+          await getSkins(valorant);
+        if (!bonus.length) {
+          waitMessage.delete();
+          return message.lineReplyNoMention("There is no Night Market going on at this moment, save your money!");
+        }
+        const embed = await generateMarketEmbed(
+          {
+            name: valorant.user.GameName,
+            tag: valorant.user.TagLine,
+            region: valorant.region.Name,
+          },
+          balance,
+          bonus,
+          Identity,
+          message
+        );
+        message.lineReplyNoMention(embed);
+        waitMessage.delete();
+      } catch (err) {
+        waitMessage.delete();
+        console.error(err);
+        message.lineReplyNoMention(
+          "Sorry! I have trouble connecting to the market."
         );
       }
     } catch (error) {
