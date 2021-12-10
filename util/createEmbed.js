@@ -147,6 +147,7 @@ async function generateSkinsEmbed(
           transform: translate(-54%, -116%) rotate(27deg) scale(1.1);
         }
 
+        .skin-image.shorty,
         .skin-image.ghost {
           transform: translate(-54%, -116%) rotate(27deg) scale(0.7);
         }
@@ -388,6 +389,7 @@ async function generateMarketEmbed(
           transform: translate(-54%, -116%) rotate(27deg) scale(1.1);
         }
 
+        .skin-image.shorty,
         .skin-image.ghost {
           transform: translate(-54%, -116%) rotate(27deg) scale(0.7);
         }
@@ -525,6 +527,8 @@ async function generateMarketEmbed(
 function skinType(name, baseprice){
   if (isKnife(name,baseprice))
     return "knife";
+  if (name.includes('Shorty'))
+    return "shorty";
   if (name.includes('Frenzy'))
     return "frenzy";
   if (name.includes('Ghost'))
