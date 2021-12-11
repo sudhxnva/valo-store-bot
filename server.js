@@ -94,7 +94,7 @@ client.on("message", async (message) => {
           rank,
           message
         );
-        message.lineReplyNoMention(embed);
+        embedMessage = message.lineReplyNoMention(embed);
         waitMessage.delete();
       } catch (err) {
         waitMessage.delete();
@@ -145,7 +145,7 @@ client.on("message", async (message) => {
           Identity,
           message
         );
-        message.lineReplyNoMention(embed);
+        embedMessage = message.lineReplyNoMention(embed);
         waitMessage.delete();
       } catch (err) {
         waitMessage.delete();

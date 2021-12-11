@@ -27,26 +27,7 @@ async function generateSkinsEmbed(
   let priceTier = "";
 
   for (const skin of skins) {
-    switch (skin.cost.amount) {
-      case 875:
-        priceTier = "12683d76-48d7-84a3-4e09-6985794f0445";
-        break;
-      case 1275:
-        priceTier = "0cebb8be-46d7-c12a-d306-e9907bfc5a25";
-        break;
-      case 1775:
-        priceTier = "60bca009-4182-7998-dee7-b8a2558dc369";
-        break;
-      case 2175:
-        priceTier = "60bca009-4182-7998-dee7-b8a2558dc369";
-        break;
-      case 2475:
-        priceTier = "411e4a55-4e59-7757-41f0-86a53f101bb5";
-        break;
-      default:
-        priceTier = "e046854e-406c-37f4-6607-19a9ba8426fc";
-        break;
-    }
+    priceTier = skinPriceTier(skin.cost.amount);
     const imageDiv = `
     <div class="skin-wrapper">
       <div class="skin-bg">
@@ -231,7 +212,7 @@ async function generateSkinsEmbed(
     transparent: true,
   });
 
-  skinsEmbed = new MessageEmbed()
+  return new MessageEmbed()
     .setTitle(`${message.author.username}'s Valorant Store`)
     .setDescription(
       `> **Gamer Tag:** ${user.name}#${user.tag} 
@@ -247,7 +228,6 @@ async function generateSkinsEmbed(
     .setImage("attachment://image.png")
     .setTimestamp(new Date())
     .setFooter(process.env.EMBED_FOOTER || "Bot by VIPΞR#4643");
-  return skinsEmbed;
 }
 
 async function generateMarketEmbed(
@@ -264,27 +244,8 @@ async function generateMarketEmbed(
   let priceTier = "";
 
   for (const skin of bonusSkins) {
-    skinBaseCost = Math.ceil((skin.offer.cost.amount*100/(100-skin.discountPercent))/5)*5
-    switch (skinBaseCost) {
-      case 875:
-        priceTier = "12683d76-48d7-84a3-4e09-6985794f0445";
-        break;
-      case 1275:
-        priceTier = "0cebb8be-46d7-c12a-d306-e9907bfc5a25";
-        break;
-      case 1775:
-        priceTier = "60bca009-4182-7998-dee7-b8a2558dc369";
-        break;
-      case 2175:amount
-        priceTier = "60bca009-4182-7998-dee7-b8a2558dc369";
-        break;
-      case 2475:
-        priceTier = "411e4a55-4e59-7757-41f0-86a53f101bb5";
-        break;
-      default:
-        priceTier = "e046854e-406c-37f4-6607-19a9ba8426fc";
-        break;
-    }
+    skinBaseCost = Math.ceil((skin.offer.cost.amount*100/(100-skin.discountPercent))/5)*5;
+    priceTier = skinPriceTier(skinBaseCost);
     const imageDiv = `
     <div class="skin-wrapper">
       <div class="skin-bg">
@@ -504,7 +465,7 @@ async function generateMarketEmbed(
     transparent: true,
   });
 
-  marketEmbed = new MessageEmbed()
+  return new MessageEmbed()
     .setTitle(`${message.author.username}'s Valorant Night Market`)
     .setDescription(
       `> **Gamer Tag:** ${user.name}#${user.tag} 
@@ -521,7 +482,23 @@ async function generateMarketEmbed(
     .setImage("attachment://image.png")
     .setTimestamp(new Date())
     .setFooter(process.env.EMBED_FOOTER || "Bot by VIPΞR#4643");
-  return marketEmbed;
+}
+
+function skinPriceTier(baseprice) {
+  switch (baseprice) {
+    case 875:
+      return "12683d76-48d7-84a3-4e09-6985794f0445";
+    case 1275:
+      return "0cebb8be-46d7-c12a-d306-e9907bfc5a25";
+    case 1775:
+      return "60bca009-4182-7998-dee7-b8a2558dc369";
+    case 2175:
+      return "60bca009-4182-7998-dee7-b8a2558dc369";
+    case 2475:
+      return "411e4a55-4e59-7757-41f0-86a53f101bb5";
+    default:
+      return "e046854e-406c-37f4-6607-19a9ba8426fc";
+  }
 }
 
 function skinType(name, baseprice){
