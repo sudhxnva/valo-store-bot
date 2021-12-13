@@ -116,7 +116,6 @@ async function generateSkinsEmbedMessage(
             margin-top: 50%;
             margin-left: 50%;
             transform: translate(-54%, -116%) rotate(27deg);
-            opacity: 0.9;
             z-index: 200;
         }
 
@@ -354,7 +353,6 @@ async function generateMarketEmbedMessage(
           margin-top: 50%;
           margin-left: 50%;
           transform: translate(-54%, -116%) rotate(27deg);
-          opacity: 0.9;
           z-index: 200;
         }
 
