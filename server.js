@@ -1,10 +1,9 @@
 const { Client, Intents } = require("discord.js");
 const { getClient, getSkins } = require("./util/valo");
-require("discord-reply");
 const {
   generateRegisterEmbed,
-  generateSkinsEmbed,
-  generateMarketEmbed,
+  generateSkinsEmbedMessage,
+  generateMarketEmbedMessage,
 } = require("./util/createEmbed");
 
 const storeCommand =
@@ -17,9 +16,11 @@ const { decrypt, encrypt } = require("./util/crypto");
 require("./db");
 const { User } = require("./models/user");
 
-const intents = new Intents(Intents.ALL);
-
-const client = new Client({ ws: { intents } });
+const intents = new Intents(32767);
+const client = new Client({
+  partials: ["CHANNEL"],
+  intents: [intents]
+});
 
 client.on("ready", async () => {
   client.user.setActivity("!store", {
@@ -28,7 +29,7 @@ client.on("ready", async () => {
   console.log("Bot Ready");
 });
 
-client.on("message", async (message) => {
+client.on("messageCreate", async (message) => {
   if (!message.content.startsWith("!") || message.author.bot) return;
 
   if (message.content == "!ping") {
@@ -41,17 +42,17 @@ client.on("message", async (message) => {
 
   if (message.content === storeCommand) {
     try {
-      if (message.channel.type === "dm")
+      if (message.channel.type === "DM")
         return message.reply("Use this command on the server!");
       const user = await User.findOne({ discordID: message.author.id });
       if (!user) {
-        message.lineReply(
+        message.reply(
           "I don't have your Valorant credentials, please reply to my DM with them!"
         );
-        return message.author.send({ embed: generateRegisterEmbed() });
+        return message.author.send({ embeds: [generateRegisterEmbed()] });
       }
 
-      const waitMessage = await message.lineReplyNoMention("Fetching...");
+      const waitMessage = await message.reply(messageWithoutMetions("Fetching..."));
       try {
         const valorant = getClient(
           user.riotUsername,
@@ -83,7 +84,7 @@ client.on("message", async (message) => {
             `Unranked\n> (Play ${unranked.gamesNeededForRank} more competitive game` +
             (unranked.gamesNeededForRank === 1 ? ")" : "s)");
         }
-        const embed = await generateSkinsEmbed(
+        const messageWithEmbeddedImage = await generateSkinsEmbedMessage(
           {
             name: valorant.user.GameName,
             tag: valorant.user.TagLine,
@@ -94,34 +95,34 @@ client.on("message", async (message) => {
           rank,
           message
         );
-        embedMessage = message.lineReplyNoMention(embed);
+        message.reply(messageWithEmbeddedImage);
         waitMessage.delete();
       } catch (err) {
         waitMessage.delete();
         console.error(err);
-        message.lineReplyNoMention(
+        message.reply(messageWithoutMetions(
           "Sorry! I have trouble connecting to the store."
-        );
+        ));
       }
     } catch (error) {
-      message.lineReplyNoMention("Sorry! I ran into an error.");
+      message.reply(messageWithoutMetions("Sorry! I ran into an error."));
       console.error(error);
     }
   }
 
   if (message.content === marketCommand) {
     try {
-      if (message.channel.type === "dm")
+      if (message.channel.type === "DM")
         return message.reply("Use this command on the server!");
       const user = await User.findOne({ discordID: message.author.id });
       if (!user) {
-        message.lineReply(
+        message.reply(
           "I don't have your Valorant credentials, please reply to my DM with them!"
         );
         return message.author.send({ embed: generateRegisterEmbed() });
       }
 
-      const waitMessage = await message.lineReplyNoMention("Fetching...");
+      const waitMessage = await message.reply(messageWithoutMetions("Fetching..."));
       try {
         const valorant = getClient(
           user.riotUsername,
@@ -132,9 +133,9 @@ client.on("message", async (message) => {
           await getSkins(valorant);
         if (!bonus.length) {
           waitMessage.delete();
-          return message.lineReplyNoMention("There is no Night Market going on at this moment, save your money!");
+          return message.reply(messageWithoutMetions("There is no Night Market going on at this moment, save your money!"));
         }
-        const embed = await generateMarketEmbed(
+        const messageWithEmbeddedImage = await generateMarketEmbedMessage(
           {
             name: valorant.user.GameName,
             tag: valorant.user.TagLine,
@@ -145,26 +146,26 @@ client.on("message", async (message) => {
           Identity,
           message
         );
-        embedMessage = message.lineReplyNoMention(embed);
+        message.reply(messageWithEmbeddedImage);
         waitMessage.delete();
       } catch (err) {
         waitMessage.delete();
         console.error(err);
-        message.lineReplyNoMention(
+        message.reply(messageWithoutMetions(
           "Sorry! I have trouble connecting to the market."
-        );
+        ));
       }
     } catch (error) {
-      message.lineReplyNoMention("Sorry! I ran into an error.");
+      message.reply(messageWithoutMetions("Sorry! I ran into an error."));
       console.error(error);
     }
   }
 
   if (message.content.startsWith("!register")) {
-    if (message.channel.type !== "dm") {
+    if (message.channel.type !== "DM") {
       message.delete({ reason: "Send personal details only on DM" });
-      return message.reply(
-        "Hey! Don't share your credentials on the server. Send it on DM only!"
+      return message.channel.send(
+        "<@" + message.author.id + "> Hey! Don't share your credentials on the server. Send it on DM only!"
       );
     }
     const args = message.content.slice("!register".length).trim().split(" ");
@@ -192,8 +193,8 @@ client.on("message", async (message) => {
         });
         waitMessage.delete();
         message.reply(
-          `Success! Welcome aboard, **${res.user.GameName}#${res.user.TagLine}**!\nUse the command` +
-            "`!store` on the server to view the guns on sale in your store!"
+          `Success! Welcome aboard, **${res.user.GameName}#${res.user.TagLine}**!\nUse the command \`` + storeCommand +
+            "\` on the server to view the guns on sale in your store!"
         );
       })
       .catch((err) => {
@@ -203,5 +204,14 @@ client.on("message", async (message) => {
       });
   }
 });
+
+function messageWithoutMetions(content){
+  return {
+    content: content,
+    allowedMentions: {
+      repliedUser: false
+    }
+  }
+}
 
 client.login(process.env.BOT_TOKEN);

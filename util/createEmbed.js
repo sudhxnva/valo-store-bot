@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageAttachment } = require("discord.js");
 const nodeHtmlToImage = require("node-html-to-image");
 
 function generateRegisterEmbed() {
@@ -13,7 +13,7 @@ function generateRegisterEmbed() {
   };
 }
 
-async function generateSkinsEmbed(
+async function generateSkinsEmbedMessage(
   user,
   skins,
   {
@@ -212,7 +212,8 @@ async function generateSkinsEmbed(
     transparent: true,
   });
 
-  return new MessageEmbed()
+  const attachment = new MessageAttachment(image, "image.png");
+  const embed = new MessageEmbed()
     .setTitle(`${message.author.username}'s Valorant Store`)
     .setDescription(
       `> **Gamer Tag:** ${user.name}#${user.tag} 
@@ -224,13 +225,20 @@ async function generateSkinsEmbed(
     .setThumbnail(
       `https://media.valorant-api.com/playercards/${PlayerCardID}/smallart.png`
     )
-    .attachFiles([{ name: "image.png", attachment: image }])
     .setImage("attachment://image.png")
     .setTimestamp(new Date())
     .setFooter(process.env.EMBED_FOOTER || "Bot by VIPΞR#4643");
+
+  return { 
+    embeds: [embed],
+    files: [attachment],
+    allowedMentions: {
+      repliedUser: false
+    }
+  };
 }
 
-async function generateMarketEmbed(
+async function generateMarketEmbedMessage(
   user,
   balance,
   bonusSkins,
@@ -465,7 +473,8 @@ async function generateMarketEmbed(
     transparent: true,
   });
 
-  return new MessageEmbed()
+  const attachment = new MessageAttachment(image, "image.png");
+  const embed = new MessageEmbed()
     .setTitle(`${message.author.username}'s Valorant Night Market`)
     .setDescription(
       `> **Gamer Tag:** ${user.name}#${user.tag} 
@@ -478,10 +487,17 @@ async function generateMarketEmbed(
     .setThumbnail(
       `https://media.valorant-api.com/playercards/${PlayerCardID}/smallart.png`
     )
-    .attachFiles([{ name: "image.png", attachment: image }])
     .setImage("attachment://image.png")
     .setTimestamp(new Date())
     .setFooter(process.env.EMBED_FOOTER || "Bot by VIPΞR#4643");
+
+  return { 
+    embeds: [embed],
+    files: [attachment],
+    allowedMentions: {
+      repliedUser: false
+    }
+  };
 }
 
 function skinPriceTier(baseprice) {
@@ -526,6 +542,6 @@ function isKnife(name, baseprice) {
 
 module.exports = {
   generateRegisterEmbed,
-  generateSkinsEmbed,
-  generateMarketEmbed,
+  generateSkinsEmbedMessage,
+  generateMarketEmbedMessage,
 };
