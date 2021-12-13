@@ -137,6 +137,10 @@ async function generateSkinsEmbedMessage(
           transform: translate(-54%, -116%) rotate(27deg) scale(0.8);
         }
 
+        .skin-image.marshal {
+          transform: translate(-50%, -120%) rotate(27deg) scale(0.9);
+        }
+
         .skin-text {
             font-weight: 700;
             font-style: italic;
@@ -371,6 +375,10 @@ async function generateMarketEmbedMessage(
           transform: translate(-54%, -116%) rotate(27deg) scale(0.8);
         }
 
+        .skin-image.marshal {
+          transform: translate(-50%, -120%) rotate(27deg) scale(0.9);
+        }
+        
         .skin-text {
           font-weight: 700;
           font-style: italic;
@@ -536,6 +544,8 @@ function skinType(name, baseprice){
     return "ghost";
   if (name.includes('Bulldog'))
     return "bulldog";
+  if (name.includes('Marshal'))
+    return "marshal";
   return "";
 }
 
