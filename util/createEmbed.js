@@ -131,6 +131,10 @@ async function generateSkinsEmbedMessage(
         .skin-image.shorty,
         .skin-image.ghost {
           transform: translate(-54%, -116%) rotate(27deg) scale(0.7);
+        },
+
+        .skin-image.bulldog {
+          transform: translate(-54%, -116%) rotate(27deg) scale(0.8);
         }
 
         .skin-text {
@@ -363,6 +367,10 @@ async function generateMarketEmbedMessage(
           transform: translate(-54%, -116%) rotate(27deg) scale(0.7);
         }
 
+        .skin-image.bulldog {
+          transform: translate(-54%, -116%) rotate(27deg) scale(0.8);
+        }
+
         .skin-text {
           font-weight: 700;
           font-style: italic;
@@ -526,6 +534,8 @@ function skinType(name, baseprice){
     return "frenzy";
   if (name.includes('Ghost'))
     return "ghost";
+  if (name.includes('Bulldog'))
+    return "bulldog";
   return "";
 }
 
