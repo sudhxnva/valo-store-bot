@@ -16,7 +16,7 @@
     "dotenv": "^8.2.0",
     "mongoose": "^5.12.7",
     "node-fetch": "^2.6.1",
-    "node-html-to-image": "^3.2.0",
+    "@tcortega/node-html-to-image": "^3.2.2",
     "valorant.js": "~/fatedev/valorant.js/"
   },
   "devDependencies": {
