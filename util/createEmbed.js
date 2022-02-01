@@ -1,6 +1,44 @@
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const nodeHtmlToImage = require("@tcortega/node-html-to-image");
 
+const puppeteer_minimal_args = [
+  "--autoplay-policy=user-gesture-required",
+  "--disable-background-networking",
+  "--disable-background-timer-throttling",
+  "--disable-backgrounding-occluded-windows",
+  "--disable-breakpad",
+  "--disable-client-side-phishing-detection",
+  "--disable-component-update",
+  "--disable-default-apps",
+  "--disable-dev-shm-usage",
+  "--disable-domain-reliability",
+  "--disable-extensions",
+  "--disable-features=AudioServiceOutOfProcess",
+  "--disable-hang-monitor",
+  "--disable-ipc-flooding-protection",
+  "--disable-notifications",
+  "--disable-offer-store-unmasked-wallet-cards",
+  "--disable-popup-blocking",
+  "--disable-print-preview",
+  "--disable-prompt-on-repost",
+  "--disable-renderer-backgrounding",
+  "--disable-setuid-sandbox",
+  "--disable-speech-api",
+  "--disable-sync",
+  "--hide-scrollbars",
+  "--ignore-gpu-blacklist",
+  "--metrics-recording-only",
+  "--mute-audio",
+  "--no-default-browser-check",
+  "--no-first-run",
+  "--no-pings",
+  "--no-sandbox",
+  "--no-zygote",
+  "--password-store=basic",
+  "--use-gl=swiftshader",
+  "--use-mock-keychain",
+];
+
 function generateRegisterEmbed() {
   return {
     color: 0x0099ff,
@@ -54,10 +92,10 @@ async function generateSkinsEmbedMessage(
   const image = await nodeHtmlToImage({
     html: template,
     puppeteerArgs: {
-      args: ["--no-sandbox"],
+      args: puppeteer_minimal_args,
     },
     encoding: "buffer",
-    transparent: true,
+    transparent: false,
   });
 
   const attachment = new MessageAttachment(image, "image.png");
@@ -128,44 +166,6 @@ async function generateMarketEmbedMessage(
   }
 
   const template = skinsHtmlTemplate(imagesDiv, 6);
-
-  const puppeteer_minimal_args = [
-    "--autoplay-policy=user-gesture-required",
-    "--disable-background-networking",
-    "--disable-background-timer-throttling",
-    "--disable-backgrounding-occluded-windows",
-    "--disable-breakpad",
-    "--disable-client-side-phishing-detection",
-    "--disable-component-update",
-    "--disable-default-apps",
-    "--disable-dev-shm-usage",
-    "--disable-domain-reliability",
-    "--disable-extensions",
-    "--disable-features=AudioServiceOutOfProcess",
-    "--disable-hang-monitor",
-    "--disable-ipc-flooding-protection",
-    "--disable-notifications",
-    "--disable-offer-store-unmasked-wallet-cards",
-    "--disable-popup-blocking",
-    "--disable-print-preview",
-    "--disable-prompt-on-repost",
-    "--disable-renderer-backgrounding",
-    "--disable-setuid-sandbox",
-    "--disable-speech-api",
-    "--disable-sync",
-    "--hide-scrollbars",
-    "--ignore-gpu-blacklist",
-    "--metrics-recording-only",
-    "--mute-audio",
-    "--no-default-browser-check",
-    "--no-first-run",
-    "--no-pings",
-    "--no-sandbox",
-    "--no-zygote",
-    "--password-store=basic",
-    "--use-gl=swiftshader",
-    "--use-mock-keychain",
-  ];
 
   const image = await nodeHtmlToImage({
     html: template,
@@ -257,6 +257,10 @@ function skinsHtmlTemplate(imagesDiv, skinCount){
             --text-price-margin: 10px;
         }
 
+        body {
+          width: 740px;
+        }
+        
         * {
             /* margin: 0; */
             padding: 0;

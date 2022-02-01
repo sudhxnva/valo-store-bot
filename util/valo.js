@@ -1,4 +1,4 @@
-const { RiotApiClient, Region } = require("valorant.js");
+const { RiotApiClient, Region, Locale } = require("valorant.js");
 const fetch = require("node-fetch");
 
 function getClient(username, password, shard = "AP") {
@@ -6,6 +6,7 @@ function getClient(username, password, shard = "AP") {
     username,
     password,
     region: Region[`${shard}`],
+    locale: Locale.US,
     debug: true,
   });
 }
