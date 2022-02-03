@@ -24,7 +24,7 @@ RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
     && chown -R pptruser:pptruser /home/pptruser \
     && chown -R pptruser:pptruser /app
 
-
+# Clone source code and install dependencies
 RUN apk add git
 WORKDIR /home/node
 RUN git clone https://github.com/survfate/valo-store-bot.git && cd valo-store-bot && git checkout discordjs13
