@@ -2,14 +2,30 @@
 
 A simple Discord bot that retrieves the skins on sale in one’s Valorant store. Forked from https://github.com/sudhxnva/valo-store-bot
 
-## Dec 10th Update:
-1. Bot now working again, but will only run with my `valorant.js` fork here: https://github.com/survfate/valorant.js
+## Fork Update:
+1. Bot now working again, with my `valorant.js` fork (`@survfate/valorant.js`) here: https://github.com/survfate/valorant.js
 
 2. Added Night Market for the bot:
 
 `!market` command on a server to retrieve the current Night Market. 
 
 ![image](https://user-images.githubusercontent.com/10634948/145446609-f8474337-a6a9-4940-bd78-83065aba545a.png)
+
+3. Add support to the following values to the `.env`:
+
+   ```
+   CONTENT_LOCALE = "the_content_locale_string"
+   EMBED_FOOTER = "your_custom_embed_footer_string"
+   ```
+   (Available locales: AE, DE, US, ES, MX, FR, ID, IT, JP, KR, PL, BR, RU, TH, TR, VN, CN, TW)
+
+4. Add Docker deploy option:
+
+- Run `docker run --name valo-mongo -d -p 27017:27017 mongo:4.4.10-focal` to deploy a MongoDB docker instance
+- Download the `Dockerfile` into your location of choice that already contained the `.env` file (check the below section), `cd` into that path
+- Run `docker build -t valostorebot .` to build a local Docker image of the bot
+- Add `DB_URL = "mongodb://mongo:27017/valostorebot"` to the `.env` file, this make the bot container able to see and connect to the MongoDB docker instance
+- Start the bot container in a detach mode with `docker run --restart unless-stopped --name valostorebot -d -p 8844:3000 -v $(pwd)/.env:/home/node/valo-store-bot/.env --link valo-mongo:mongo valostorebot`
 
 ---
 

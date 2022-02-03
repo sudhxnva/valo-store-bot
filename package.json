@@ -1,6 +1,6 @@
 {
   "name": "valo-store-bot",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "description": "A simple Discord bot that retrieves the skins on sale in one’s Valorant store",
   "repository": "github:sudhxnva/valo-store-bot",
   "main": "index.js",
@@ -17,7 +17,7 @@
     "mongoose": "^5.12.7",
     "node-fetch": "^2.6.7",
     "@tcortega/node-html-to-image": "^3.2.2",
-    "@survfate/valorant.js": "^1.6.6"
+    "@survfate/valorant.js": "^1.6.7"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
