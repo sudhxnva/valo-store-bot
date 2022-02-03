@@ -77,7 +77,7 @@ async function generateSkinsEmbedMessage(
           <span class="skin-price-text">${skin.cost.amount.toLocaleString()} VP</span>
         </div>
         <div class="skin-text skin-title">${skin.name}</div>
-        <div class="skin-text skin-title bg">${skin.name}</div>
+        <div class="skin-text skin-title-bg">${skin.name}</div>
         <img src="https://media.valorant-api.com/weaponskinlevels/${
           skin.id
         }/displayicon.png"
@@ -155,7 +155,7 @@ async function generateMarketEmbedMessage(
           <span class="skin-base-price-text">${skinBaseCost}</span>
         </div>
         <div class="skin-text skin-title">${skin.offer.rewards[0].name}</div>
-        <div class="skin-text skin-title bg">${skin.offer.rewards[0].name}</div>
+        <div class="skin-text skin-title-bg">${skin.offer.rewards[0].name}</div>
         <img src="https://media.valorant-api.com/weaponskinlevels/${
           skin.offer.rewards[0].id
         }/displayicon.png"
@@ -260,7 +260,7 @@ function skinsHtmlTemplate(imagesDiv, skinCount){
         body {
           width: 740px;
         }
-        
+
         * {
             /* margin: 0; */
             padding: 0;
@@ -335,7 +335,7 @@ function skinsHtmlTemplate(imagesDiv, skinCount){
           text-transform: uppercase;
         }
 
-        .skin-text.skin-title.bg {
+        .skin-text.skin-title-bg {
           position: absolute;
           padding: 2px;
           font-size: 75px;
@@ -351,6 +351,14 @@ function skinsHtmlTemplate(imagesDiv, skinCount){
           max-width: 150px;
           font-size: 20px;
           color: rgba(255, 255, 255, 0.911);
+          -webkit-text-stroke: 0.5px black;
+          text-shadow:
+            3px 3px 0 #000,
+            -1px -1px 0 #000,  
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;
+          z-index: 2;
         }
 
         .skin-text.skin-price {

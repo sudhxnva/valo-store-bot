@@ -15,9 +15,9 @@
     "discord.js": "^13.3.1",
     "dotenv": "^8.2.0",
     "mongoose": "^5.12.7",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "@tcortega/node-html-to-image": "^3.2.2",
-    "valorant.js": "~/fatedev/valorant.js/"
+    "@survfate/valorant.js": "^1.6.6"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
