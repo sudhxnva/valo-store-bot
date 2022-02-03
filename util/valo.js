@@ -6,7 +6,7 @@ function getClient(username, password, shard = "AP") {
     username,
     password,
     region: Region[`${shard}`],
-    locale: Locale.US,
+    locale: Locale[process.env.CONTENT_LOCALE || 'US'],
     debug: true,
   });
 }

@@ -303,6 +303,7 @@ function skinsHtmlTemplate(imagesDiv, skinCount){
           margin-top: 50%;
           margin-left: 50%;
           transform: translate(-54%, -116%) rotate(27deg);
+          filter: drop-shadow(10px 10px 10px #000);
           z-index: 200;
         }
 
@@ -351,7 +352,6 @@ function skinsHtmlTemplate(imagesDiv, skinCount){
           max-width: 150px;
           font-size: 20px;
           color: rgba(255, 255, 255, 0.911);
-          -webkit-text-stroke: 0.5px black;
           text-shadow:
             3px 3px 0 #000,
             -1px -1px 0 #000,  
