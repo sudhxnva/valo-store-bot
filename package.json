@@ -17,7 +17,7 @@
     "mongoose": "^5.12.7",
     "node-fetch": "^2.6.7",
     "@tcortega/node-html-to-image": "^3.2.2",
-    "@survfate/valorant.js": "^1.6.9"
+    "@survfate/valorant.js": "^1.6.10"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
